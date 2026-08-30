@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hicham Eddoubi</title>
+<meta name="author" content="Hicham Eddoubi">
+<meta name="description" content="Hicham Eddoubi is a PhD student in the Italian National PhD Programme in Artificial Intelligence, working on adversarial robustness and the detection of AI-generated images at PRA Lab, University of Cagliari.">
+<meta name="keywords" content="Hicham Eddoubi, adversarial machine learning, AI-generated image detection, deepfake detection, AI security, PRA Lab, University of Cagliari, Sapienza">
+<link rel="canonical" href="https://tsalmonking.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hicham Eddoubi">
+<meta property="og:description" content="PhD student working on adversarial robustness and AI-generated image detection.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+<!-- filter used by the portrait toggle; visually hidden -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <filter id="perturb" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="7" result="grain"/>
+    <feDisplacementMap in="SourceGraphic" in2="grain" scale="5" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="index.html">hicham eddoubi</a>
+    <nav class="nav">
+      <a href="index.html" aria-current="page">about</a>
+      <a href="blog.html">blog</a>
+      <a href="publications.html">publications</a>
+      <a href="projects.html">projects</a>
+      <a href="cv.html">cv</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch to dark theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <section class="hero">
+      <div>
+        <h1>Hicham Eddoubi</h1>
+        <p class="role">PhD student · AI security &amp; multimedia forensics</p>
+
+        <p>I am a PhD student in the <a href="https://www.phd-ai.it/" target="_blank" rel="noopener">Italian National PhD Programme in Artificial Intelligence</a>, run by <a href="https://www.uniroma1.it/en" target="_blank" rel="noopener">Sapienza University of Rome</a> in collaboration with the <a href="https://www.unica.it/" target="_blank" rel="noopener">University of Cagliari</a>. I work at the <a href="https://pralab.diee.unica.it/" target="_blank" rel="noopener">PRA Lab</a> under the supervision of <a href="https://www.saiferlab.ai/people/battistabiggio" target="_blank" rel="noopener">Prof. Battista Biggio</a>.</p>
+
+        <p>My research asks a simple question: do the detectors we trust actually hold up when someone is trying to break them? I build benchmarks and attacks that stress-test detectors of AI-generated images, and I study how the same brittleness shows up in large language models and in malware classifiers under distribution drift.</p>
+
+        <p>Before the PhD I earned an MSc in Computer Engineering, Cybersecurity and Artificial Intelligence at the University of Cagliari (2024, with honours), and a BSc in Informatics and Mathematical Studies at Mohammed V University in Rabat.</p>
+      </div>
+
+      <div class="portrait">
+        <figure>
+          <img src="assets/img/profile.jpg" alt="Portrait of Hicham Eddoubi" width="400" height="400">
+          <svg class="noise" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <filter id="grain-overlay"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="3"/></filter>
+            <rect width="100" height="100" filter="url(#grain-overlay)"/>
+          </svg>
+        </figure>
+        <p class="eps">
+          <span class="label">ε = 0</span>
+          <button type="button" aria-pressed="false">perturb</button>
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Research interests</h2>
+      <ul class="tags">
+        <li>adversarial machine learning</li>
+        <li>AI-generated image detection</li>
+        <li>deepfake &amp; spoofing detection</li>
+        <li>robustness benchmarking</li>
+        <li>LLM security</li>
+        <li>malware detection under drift</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>News</h2>
+      <ul class="news">
+        <li>
+          <time datetime="2026-02">Feb 2026</time>
+          <span>Preprint out: <em>Beyond Suffixes: Token Position in GCG Adversarial Attacks on Large Language Models</em>.</span>
+        </li>
+        <li>
+          <time datetime="2025-06">Jun 2025</time>
+          <span><a href="https://arxiv.org/abs/2506.03988" target="_blank" rel="noopener">RAID</a> is on arXiv — 72k transferable adversarial examples for evaluating AI-generated image detectors, with <a href="https://github.com/pralab/RAID" target="_blank" rel="noopener">code and data</a> released.</span>
+        </li>
+        <li>
+          <time datetime="2024-09">Sep 2024</time>
+          <span>Defended my MSc thesis on mobile malware detection under drift, and started the PhD at PRA Lab.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Elsewhere</h2>
+      <p>Reach me at <a href="mailto:hicham.eddoubi@unica.it">hicham.eddoubi@unica.it</a>. I am generally happy to talk about robustness evaluation, benchmark design, and where detection research quietly overfits.</p>
+
+      <div class="social">
+        <a href="https://scholar.google.com/citations?user=aPghm40AAAAJ&amp;hl=en" target="_blank" rel="noopener" aria-label="Google Scholar">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+          scholar
+        </a>
+        <a href="https://github.com/tsalmonking" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.26 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"/></svg>
+          github
+        </a>
+        <a href="https://www.linkedin.com/in/hicham-eddoubi/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM2.9 21h4.16V9.5H2.9V21zM9.5 9.5H13.5v1.57h.06c.55-1.02 1.9-2.1 3.9-2.1 4.17 0 4.94 2.66 4.94 6.12V21h-4.15v-5.1c0-1.22-.02-2.79-1.75-2.79-1.76 0-2.03 1.33-2.03 2.7V21H9.5V9.5z"/></svg>
+          linkedin
+        </a>
+        <a href="https://www.saiferlab.ai/people/hichameddoubi" target="_blank" rel="noopener" aria-label="sAIfer Lab profile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.4-3 8.3-7 10-4-1.7-7-5.6-7-10V6l7-3z"/></svg>
+          sAIfer lab
+        </a>
+        <a href="mailto:hicham.eddoubi@unica.it" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="M3 6l9 6 9-6"/></svg>
+          email
+        </a>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="colophon">
+  <div class="wrap">
+    <span>© 2026 Hicham Eddoubi</span>
+    <span>Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a></span>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

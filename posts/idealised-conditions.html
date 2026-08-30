@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your detector is 99% accurate under idealised conditions · Hicham Eddoubi</title>
+<meta name="author" content="Hicham Eddoubi">
+<meta name="description" content="Why AI-generated image detectors report near-perfect accuracy and still fail under attack, and what a robustness number has to include before it means anything.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Your detector is 99% accurate under idealised conditions">
+<meta property="og:description" content="Why detection accuracy and adversarial robustness keep drifting apart.">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="../index.html">hicham eddoubi</a>
+    <nav class="nav">
+      <a href="../index.html">about</a>
+      <a href="../blog.html" aria-current="page">blog</a>
+      <a href="../publications.html">publications</a>
+      <a href="../projects.html">projects</a>
+      <a href="../cv.html">cv</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch to dark theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <article>
+      <div class="post-head">
+        <p class="post-meta">
+          <time datetime="2026-08-14">14 Aug 2026</time>
+          <span class="dot">·</span>
+          <span>7 min</span>
+          <span class="tag">evaluation</span>
+          <span class="tag">deepfakes</span>
+        </p>
+        <h1>Your detector is 99% accurate under idealised conditions</h1>
+        <p class="standfirst">Detection accuracy and adversarial robustness are measuring different things, and only one of them appears in most papers.</p>
+      </div>
+
+      <div class="prose">
+
+        <p>Pick a recent paper on detecting AI-generated images. It will almost certainly report accuracy above 95%, often above 99%, across several generators. Pick another one. Same. The field looks solved from the abstract.</p>
+
+        <p>Then someone runs a gradient through the detector and the number collapses.</p>
+
+        <p>This is not a surprising result — it has been the expected outcome for any undefended classifier since roughly 2013. What is surprising is how rarely the check is performed at all. The gap is not a disagreement about findings. It is that two different questions are being asked, and only the easier one is being answered.</p>
+
+        <h2>Two different questions</h2>
+
+        <p>The first question is <strong>can this model separate real from generated images drawn from a fixed distribution?</strong> That is what a test-set accuracy measures. It is a real question and a hard one, especially across generators the model never saw during training.</p>
+
+        <p>The second question is <strong>can this model separate real from generated images when someone is actively trying to make it fail?</strong> No amount of the first answers the second. A model can sit at 99.4% on held-out data and be moved to whatever label you like with a perturbation you cannot see.</p>
+
+        <p>Papers that report only the first are not wrong. They are answering a question that the deployment setting does not ask. Detection is a security problem: the images you most want to catch are the ones produced by someone who knows a detector exists.</p>
+
+        <h2>Why the check gets skipped</h2>
+
+        <p>Two reasons, and I think the second matters more.</p>
+
+        <p>The first is awareness. Plenty of work on generative forensics comes from a multimedia or computer vision background rather than a security one, where the adversarial framing is not the default lens.</p>
+
+        <p>The second is cost. Running a proper robustness evaluation is genuinely a lot of work. You need attack implementations, per-model hyperparameters, a compute budget, and enough familiarity with the failure modes to know when your attack is under-optimised rather than the model being robust. A weak attack produces a flattering number, and a flattering number is indistinguishable from a real one unless someone else attacks the model harder later.</p>
+
+        <div class="callout">
+          <p>This is the failure mode worth naming: an inadequate evaluation does not look inconclusive. It looks like a good result.</p>
+        </div>
+
+        <p>So the rational move for an author with a deadline is to skip it, and the resulting literature reports one number that everyone reads as if it were the other.</p>
+
+        <h2>What a robustness claim has to specify</h2>
+
+        <p>If you are reporting robustness, the number is meaningless without the conditions attached. At minimum:</p>
+
+        <ul>
+          <li><strong>Threat model.</strong> White-box, black-box, or transfer? Does the attacker know the architecture, the weights, the preprocessing?</li>
+          <li><strong>Perturbation budget.</strong> Which norm, and what ε. An unbounded attack that visibly wrecks the image proves nothing about a realistic adversary.</li>
+          <li><strong>Attack strength.</strong> Number of steps, restarts, step size. An attack that has not converged is not evidence of robustness.</li>
+          <li><strong>The full curve, not one point.</strong> Robust accuracy at a single ε hides where the model actually breaks.</li>
+        </ul>
+
+        <p>A sentence of the form <em>robust accuracy 71%</em> with none of this attached carries no information at all.</p>
+
+        <h2>The cheaper path: fixed adversarial datasets</h2>
+
+        <p>The cost problem has a partial answer. If the barrier is that running attacks is expensive and easy to get wrong, then the attacks can be run once, carefully, and released as data.</p>
+
+        <p>This is the idea behind <a href="../publications.html">RAID</a>: generate adversarial examples with an ensemble attack against a set of detectors, so that they transfer to models that were never part of the ensemble, and ship the result as a fixed dataset. Evaluation then costs a forward pass.</p>
+
+        <pre><code>from datasets import load_dataset
+
+raid = load_dataset("pralab/RAID", split="test")
+correct = sum(detector(x["image"]) == x["label"] for x in raid)
+print(f"robust accuracy: {correct / len(raid):.1%}")</code></pre>
+
+        <p>The trade-off is explicit and worth stating plainly. A fixed dataset is a <em>lower bound on attackability</em>, not a certificate. An adaptive attacker who targets your specific model will do better than transferred examples do — that is what adaptive means. What the dataset buys is that the check becomes cheap enough that there is no excuse for omitting it, and that everyone's numbers become comparable because they came from the same examples.</p>
+
+        <blockquote>
+          <p>A benchmark's job is not to be the hardest possible attack. It is to make the easy attack impossible to ignore.</p>
+        </blockquote>
+
+        <p>It also has a shelf life. Detectors will be tuned against any fixed set of examples, deliberately or not, and once that happens the benchmark measures memorisation instead of robustness. That is fine — it just means these datasets need to be treated as versioned artifacts that get regenerated, not as permanent fixtures.<sup><a href="#fn1" id="ref1">1</a></sup></p>
+
+        <h2>What I would like to see become normal</h2>
+
+        <p>Not much, honestly. A single additional table. Report clean accuracy, report robust accuracy under a stated threat model and budget, and say which attack produced it. If robustness is bad, report that it is bad — a detector that is accurate and fragile is still useful in settings where nobody is attacking it, and saying so is more useful than a number that quietly implies otherwise.</p>
+
+        <p>The current equilibrium, where the strongest claim is the least tested one, is not sustainable for a field whose entire premise is adversarial.</p>
+
+        <div class="footnotes">
+          <ol>
+            <li id="fn1">The same has happened to essentially every static robustness benchmark in adversarial ML. It is a reason to plan for regeneration, not a reason to avoid building them. <a href="#ref1">↩</a></li>
+          </ol>
+        </div>
+
+      </div>
+
+      <p class="post-foot"><a href="../blog.html">← all posts</a></p>
+    </article>
+
+  </div>
+</main>
+
+<footer class="colophon">
+  <div class="wrap">
+    <span>© 2026 Hicham Eddoubi</span>
+    <span>Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a></span>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

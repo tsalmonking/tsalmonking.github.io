@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hicham Eddoubi</title>
+    <link>https://tsalmonking.github.io/</link>
+    <atom:link href="https://tsalmonking.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>Notes on adversarial robustness, benchmark design, and detection research.</description>
+    <language>en</language>
+
+    <item>
+      <title>Your detector is 99% accurate under idealised conditions</title>
+      <link>https://tsalmonking.github.io/posts/idealised-conditions.html</link>
+      <guid>https://tsalmonking.github.io/posts/idealised-conditions.html</guid>
+      <pubDate>Fri, 14 Aug 2026 09:00:00 +0000</pubDate>
+      <description>Detection accuracy and adversarial robustness are measuring different things, and only one of them appears in most papers.</description>
+    </item>
+
+  </channel>
+</rss>
