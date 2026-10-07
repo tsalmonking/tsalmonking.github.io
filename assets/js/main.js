@@ -1,4 +1,4 @@
-/* Theme switch + portrait perturbation toggle. No dependencies. */
+/* Theme switch. No dependencies. */
 
 (function () {
   "use strict";
@@ -39,18 +39,4 @@
     store("theme", next);
   });
 
-  /* ---------- portrait perturbation ---------- */
-
-  var portrait = document.querySelector(".portrait");
-  var epsBtn = document.querySelector(".eps button");
-  var epsLabel = document.querySelector(".eps .label");
-
-  if (portrait && epsBtn && epsLabel) {
-    epsBtn.addEventListener("click", function () {
-      var on = portrait.classList.toggle("is-perturbed");
-      epsLabel.textContent = on ? "ε = 8/255" : "ε = 0";
-      epsBtn.textContent = on ? "remove" : "perturb";
-      epsBtn.setAttribute("aria-pressed", String(on));
-    });
-  }
 })();

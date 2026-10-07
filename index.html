@@ -19,13 +19,6 @@
 </head>
 <body>
 
-<!-- filter used by the portrait toggle; visually hidden -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-  <filter id="perturb" x="0" y="0" width="100%" height="100%">
-    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="7" result="grain"/>
-    <feDisplacementMap in="SourceGraphic" in2="grain" scale="5" xChannelSelector="R" yChannelSelector="G"/>
-  </filter>
-</svg>
 
 <header class="masthead">
   <div class="wrap">
@@ -33,7 +26,7 @@
     <nav class="nav">
       <a href="index.html" aria-current="page">about</a>
       <a href="blog.html">blog</a>
-      <a href="publications.html">publications</a>
+      <a href="publications.html">research</a>
       <a href="projects.html">projects</a>
       <a href="cv.html">cv</a>
     </nav>
@@ -50,7 +43,7 @@
     <section class="hero">
       <div>
         <h1>Hicham Eddoubi</h1>
-        <p class="role">PhD student · AI security &amp; multimedia forensics</p>
+        <p class="role">PhD student in AI Security</p>
 
         <p>I am a PhD student in the <a href="https://www.phd-ai.it/" target="_blank" rel="noopener">Italian National PhD Programme in Artificial Intelligence</a>, run by <a href="https://www.uniroma1.it/en" target="_blank" rel="noopener">Sapienza University of Rome</a> in collaboration with the <a href="https://www.unica.it/" target="_blank" rel="noopener">University of Cagliari</a>. I work at the <a href="https://pralab.diee.unica.it/" target="_blank" rel="noopener">PRA Lab</a> under the supervision of <a href="https://www.saiferlab.ai/people/battistabiggio" target="_blank" rel="noopener">Prof. Battista Biggio</a>.</p>
 
@@ -61,28 +54,17 @@
 
       <div class="portrait">
         <figure>
-          <img src="assets/img/profile.jpg" alt="Portrait of Hicham Eddoubi" width="400" height="400">
-          <svg class="noise" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            <filter id="grain-overlay"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="3"/></filter>
-            <rect width="100" height="100" filter="url(#grain-overlay)"/>
-          </svg>
+          <img src="assets/img/he.jpg" alt="Portrait of Hicham Eddoubi" width="256" height="256">
         </figure>
-        <p class="eps">
-          <span class="label">ε = 0</span>
-          <button type="button" aria-pressed="false">perturb</button>
-        </p>
       </div>
     </section>
 
     <section class="section">
       <h2>Research interests</h2>
       <ul class="tags">
-        <li>adversarial machine learning</li>
+        <li>AI security</li>
+        <li>adversarial robustness</li>
         <li>AI-generated image detection</li>
-        <li>deepfake &amp; spoofing detection</li>
-        <li>robustness benchmarking</li>
-        <li>LLM security</li>
-        <li>malware detection under drift</li>
       </ul>
     </section>
 

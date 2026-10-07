@@ -194,7 +194,7 @@ html:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
 .hero p { margin: 0 0 1.05rem; }
 .hero p:last-of-type { margin-bottom: 0; }
 
-/* ---------- portrait + the adversarial signature ---------- */
+/* ---------- portrait ---------- */
 
 .portrait { position: relative; }
 
@@ -213,50 +213,10 @@ html:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
   height: auto;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  transition: filter 0.35s ease;
 }
-
-.portrait .noise {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  mix-blend-mode: overlay;
-  pointer-events: none;
-  transition: opacity 0.35s ease;
-}
-
-.portrait.is-perturbed img { filter: url(#perturb) saturate(1.06); }
-.portrait.is-perturbed .noise { opacity: 0.55; }
-
-.eps {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.5rem;
-  margin-top: 0.55rem;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--muted);
-  letter-spacing: 0.02em;
-}
-
-.eps button {
-  appearance: none;
-  background: none;
-  border: none;
-  padding: 0;
-  font: inherit;
-  color: var(--accent);
-  cursor: pointer;
-  border-bottom: 1px dotted currentColor;
-}
-
-.eps .label { white-space: nowrap; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .portrait img,
-  .portrait .noise,
   body { transition: none; }
 }
 
@@ -546,7 +506,7 @@ h3 {
 /* ---------- print ---------- */
 
 @media print {
-  .masthead, .colophon, .theme-toggle, .eps { display: none; }
+  .masthead, .colophon, .theme-toggle { display: none; }
   body { color: #000; background: #fff; }
   a { color: #000; }
 }

@@ -21,7 +21,7 @@ To preview locally: `python3 -m http.server 8000` from this folder, then open `h
 | `assets/img/profile.jpg` | Placeholder. Swap in a square photo (800×800 or larger). Keep the filename or update `index.html`. |
 | `assets/cv.pdf` | Not included. Add your CV PDF here, or delete that line from `cv.html`. |
 | `cv.html` → Teaching | Empty section with a note. Fill in or delete. |
-| `blog.html` + `posts/idealised-conditions.html` | One sample post, written to show the layout. Keep, rewrite, or delete both. |
+| `blog.html` + `posts/blurred-line.html` | Blog index and the current post (draft). |
 | `feed.xml` | RSS feed. Update the URLs if you use a custom domain, and add an `<item>` per post. |
 | `publications.html` | Venue for RAID is listed as the arXiv preprint. Update if it has a final venue. |
 | `index.html` → News | Three entries. Add new ones at the top. |
@@ -34,7 +34,7 @@ index.html               about page — bio, interests, news, links
 blog.html                post index, newest first
 posts/                   one HTML file per post
   _template.html         copy this to start a new post
-  idealised-conditions.html   sample post
+  blurred-line.html           current post (draft)
 publications.html        grouped by year, newest first
 projects.html            RAID, SecML-Torch, android-detectors
 cv.html                  education, research, teaching, skills
