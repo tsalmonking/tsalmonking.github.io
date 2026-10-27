@@ -1,0 +1,91 @@
+/* Attention demo widget. Scoped under .attn-demo; uses only site tokens. */
+.attn-demo {
+  --ad-l2: color-mix(in srgb, var(--ink) 55%, transparent);
+  margin: 1.75rem 0;
+  padding: 1rem;
+  background: var(--paper-soft);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--body);
+  min-width: 0;
+}
+.attn-demo *, .attn-demo *::before, .attn-demo *::after { box-sizing: border-box; }
+
+.attn-demo .attn-presets { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+.attn-demo .attn-btn {
+  font: inherit; font-size: 0.82rem; color: var(--body); background: var(--paper);
+  border: 1px solid var(--rule); border-radius: var(--radius);
+  padding: 0.4rem 0.7rem; cursor: pointer; min-height: 2.25rem;
+  transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+.attn-demo .attn-btn:hover { border-color: var(--accent); }
+.attn-demo .attn-btn[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--ink); font-weight: 500; }
+/* the two block presets read as a pair: dashed accent edge */
+.attn-demo .attn-btn.is-pair { border-style: dashed; border-color: color-mix(in srgb, var(--accent) 55%, var(--rule)); }
+
+.attn-demo .attn-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.attn-demo .attn-panel { min-width: 0; }
+.attn-demo .attn-h {
+  margin: 0 0 0.6rem; font-family: var(--font-mono); font-size: 0.74rem; font-weight: 500;
+  letter-spacing: 0.02em; color: var(--muted);
+}
+.attn-demo .attn-rows { display: flex; flex-direction: column; gap: 0.25rem; }
+
+.attn-demo .attn-row {
+  display: grid; grid-template-columns: 5.2rem minmax(0, 1fr) 2.2rem 1.6rem; align-items: center;
+  column-gap: 0.4rem; padding: 0.15rem 0.3rem; border-radius: var(--radius);
+}
+.attn-demo .attn-row.is-block { background: var(--accent-soft); outline: 1px dashed var(--accent); outline-offset: -1px; }
+.attn-demo .attn-tok { font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.attn-demo .attn-track { height: 0.8rem; background: color-mix(in srgb, var(--ink) 7%, transparent); border-radius: 2px; overflow: hidden; }
+.attn-demo .attn-fill { display: block; height: 100%; width: 0; transition: width 0.45s ease; }
+.attn-demo .attn-panel:first-child .attn-fill { background: var(--accent); }
+.attn-demo .attn-panel:last-child .attn-fill { background: var(--ad-l2); }
+.attn-demo .attn-val { font-family: var(--font-mono); font-size: 0.74rem; color: var(--muted); text-align: right; }
+.attn-demo .attn-badge { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 500; color: var(--accent); text-align: right; }
+.attn-demo .attn-panel:last-child .attn-badge { color: var(--ink); }
+.attn-demo .attn-sink {
+  font-family: var(--font-mono); font-size: 0.6rem; color: var(--accent); border: 1px solid var(--accent);
+  border-radius: 999px; padding: 0 0.3rem; line-height: 1.3; margin-left: 0.3rem;
+}
+
+.attn-demo .attn-caption { margin: 0.8rem 0 0; font-size: 0.82rem; color: var(--muted); min-height: 1.2em; }
+.attn-demo .attn-caption.is-pair { color: var(--accent); font-weight: 500; }
+
+.attn-demo .attn-readout { margin-top: 0.9rem; padding-top: 0.8rem; border-top: 1px solid var(--rule); }
+.attn-demo .attn-readout p { margin: 0 0 0.3rem; font-family: var(--font-mono); font-size: 0.76rem; color: var(--ink); overflow-wrap: anywhere; }
+.attn-demo .attn-readout .attn-rtop { color: var(--muted); }
+.attn-demo .attn-meter { height: 0.35rem; background: color-mix(in srgb, var(--ink) 9%, transparent); border-radius: 2px; margin: 0.15rem 0 0.5rem; overflow: hidden; }
+.attn-demo .attn-meter span { display: block; height: 100%; width: 0; background: var(--ink); transition: width 0.45s ease; }
+
+.attn-demo .attn-edit { margin-top: 0.9rem; border-top: 1px solid var(--rule); padding-top: 0.7rem; }
+.attn-demo .attn-edit summary { cursor: pointer; font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); }
+.attn-demo .attn-edit-rows { display: flex; flex-direction: column; gap: 0.5rem; margin: 0.7rem 0; }
+.attn-demo .attn-erow { display: grid; grid-template-columns: 5.2rem 1fr 1fr; gap: 0.6rem; align-items: center; padding: 0.25rem 0.3rem; border-radius: var(--radius); }
+.attn-demo .attn-erow.is-block { background: var(--accent-soft); outline: 1px dashed var(--accent); outline-offset: -1px; }
+.attn-demo .attn-ctl { min-width: 0; }
+.attn-demo .attn-elab { display: flex; justify-content: space-between; gap: 0.4rem; font-size: 0.7rem; color: var(--muted); }
+.attn-demo .attn-elab output { font-family: var(--font-mono); color: var(--ink); }
+.attn-demo input[type="range"] { width: 100%; margin: 0; accent-color: var(--accent); }
+.attn-demo .attn-reset {
+  font: inherit; font-family: var(--font-mono); font-size: 0.76rem; color: var(--body); background: var(--paper);
+  border: 1px solid var(--rule); border-radius: var(--radius); padding: 0.3rem 0.8rem; cursor: pointer;
+}
+.attn-demo .attn-reset:hover { border-color: var(--accent); }
+.attn-demo button:focus-visible, .attn-demo input:focus-visible, .attn-demo summary:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}
+
+@media (max-width: 560px) {
+  .attn-demo { padding: 0.75rem; }
+  .attn-demo .attn-panels { grid-template-columns: 1fr; gap: 1.1rem; }
+  .attn-demo .attn-erow { grid-template-columns: 1fr 1fr; }
+  .attn-demo .attn-erow > .attn-tok { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .attn-demo .attn-fill, .attn-demo .attn-meter span, .attn-demo .attn-btn { transition: none; }
+}
+.attn-demo [hidden] { display: none; }
