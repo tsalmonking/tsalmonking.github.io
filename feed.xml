@@ -8,6 +8,14 @@
     <language>en</language>
 
     <item>
+      <title>Attention is not attribution</title>
+      <link>https://tsalmonking.github.io/posts/attention-is-not-attribution.html</link>
+      <guid>https://tsalmonking.github.io/posts/attention-is-not-attribution.html</guid>
+      <pubDate>Tue, 27 Oct 2026 17:00:00 +0000</pubDate>
+      <description>Attention weights say how a head divided its budget, not what each source actually delivered.</description>
+    </item>
+
+    <item>
       <title>How do we refocus the blurred line between fakes and reals</title>
       <link>https://tsalmonking.github.io/posts/blurred-line.html</link>
       <guid>https://tsalmonking.github.io/posts/blurred-line.html</guid>
