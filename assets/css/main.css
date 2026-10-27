@@ -702,6 +702,33 @@ h3 {
 
 .prose .callout p { margin: 0; }
 
+/* tables */
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 1.4rem;
+  font-size: 0.9375rem;
+  display: block;
+  overflow-x: auto;
+}
+.prose th,
+.prose td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.5rem 0.75rem 0.5rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.prose th { color: var(--ink); font-weight: 600; }
+
+/* reference list */
+
+.prose ol.refs { font-size: 0.9375rem; }
+
+/* display math */
+
+.prose .katex-display { overflow-x: auto; overflow-y: hidden; padding: 0.25rem 0; }
+
 /* footnotes */
 
 .prose sup a {

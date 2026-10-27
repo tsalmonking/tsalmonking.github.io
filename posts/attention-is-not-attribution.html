@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Attention is not attribution · Hicham Eddoubi</title>
+<meta name="author" content="Hicham Eddoubi">
+<meta name="description" content="Attention weights say how a head divided its budget, not what each source actually delivered. Read alone, they can rank sources backwards and make opposite mechanisms look identical.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Attention is not attribution">
+<meta property="og:description" content="Why attention weights alone are a misleading measure of token importance in LLMs, with an interactive toy head.">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<link rel="stylesheet" href="../assets/css/main.css">
+<link rel="stylesheet" href="../assets/css/attn-demo.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="../index.html">hicham eddoubi</a>
+    <nav class="nav">
+      <a href="../index.html">about</a>
+      <a href="../blog.html" aria-current="page">blog</a>
+      <a href="../publications.html">research</a>
+      <a href="../projects.html">projects</a>
+      <a href="../cv.html">cv</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch to dark theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <article>
+      <div class="post-head">
+        <p class="post-meta">
+          <time datetime="2026-10-27">27 Oct 2026</time>
+          <span class="dot">·</span>
+          <span>9 min</span>
+          <span class="tag">interpretability</span>
+        </p>
+        <h1>Attention is not attribution</h1>
+        <p class="standfirst">An attention weight tells you how a head divided its budget, not what each token actually delivered. Read on its own, it can rank sources backwards, and it can make two opposite mechanisms look exactly the same.</p>
+      </div>
+
+      <div class="prose">
+
+        <p>A lot of work on jailbreaks, mine included, ends up asking a question of the form <em>"where does the adversarial text act?"</em>. The quickest instrument at hand is the attention map: run the prompt, pull out $\alpha$, see which tokens the model "looks at". If the adversarial tokens soak up attention from the rest of the prompt, the story writes itself: they hijacked the model's attention.</p>
+
+        <p>I wanted to understand exactly what that instrument measures, so I wrote out one transformer layer by hand. The short version: attention weights are half of a product, and the other half is neither constant nor ignorable. This post walks through why, with a small interactive head you can play with.</p>
+
+        <h2>What one head computes</h2>
+
+        <p>Take a decoder like Llama-2. At layer $\ell$, each position $j$ carries a residual-stream vector $x_\ell(j) \in \mathbb{R}^d$. A head normalizes it and projects it three ways:</p>
+
+        $$q(i) = \text{RoPE}_i\big(W_Q^\top \tilde{x}(i)\big), \qquad k(j) = \text{RoPE}_j\big(W_K^\top \tilde{x}(j)\big), \qquad v(j) = W_V^\top \tilde{x}(j).$$
+
+        <p>The attention weight from destination $i$ to source $j$ is a softmax over the causal window:</p>
+
+        $$\alpha(i,j) = \frac{\exp\big(q(i)\cdot k(j)/\sqrt{d_h}\big)}{\sum_{j' \le i} \exp\big(q(i)\cdot k(j')/\sqrt{d_h}\big)}, \qquad \sum_{j \le i} \alpha(i,j) = 1.$$
+
+        <p>The head then writes back into the residual stream through its output projection $W_O$. Because everything after the softmax is linear, $W_O$ can be pushed inside the sum:</p>
+
+        $$\text{head}(i) = W_O^\top \sum_{j \le i} \alpha(i,j)\, v(j) = \sum_{j \le i} \underbrace{\alpha(i,j)\, f(j)}_{c(i,j)}, \qquad f(j) = W_O^\top v(j).$$
+
+        <p>That per-source term $c(i,j)$ is the object worth measuring. Kobayashi et al. call $f(j)$ the <strong>transformed vector</strong>: the content token $j$ offers to anyone who attends to it, in this head, at this layer. Two details matter later. RoPE touches $q$ and $k$ but not $v$, so position enters through the <em>routing</em>, not the payload. And attention scores depend on the distance $i-j$, which becomes a confound the moment you start moving tokens around.</p>
+
+        <h2>Problem 1: allocation is not reception</h2>
+
+        <p>Write the size of what $j$ delivers to $i$ as a product:</p>
+
+        $$\lVert c(i,j) \rVert = \underbrace{\alpha(i,j)}_{\text{how the budget was split (QK)}} \cdot \underbrace{\lVert f(j) \rVert}_{\text{how much } j \text{ has to give (OV)}}.$$
+
+        <p>Reading $\alpha$ alone silently assumes the right-hand factor is the same for every token. It isn't. Kobayashi et al. measured both factors in BERT and found them <em>negatively</em> correlated on exactly the tokens that collect the most attention: [SEP], [CLS], commas and periods get large weights and small transformed vectors. So the tokens that look most important by attention are often the ones that deliver the least, and a ranking by $\alpha$ can invert the ranking by what actually arrives.</p>
+
+        <h2>Problem 2: heads cannot abstain</h2>
+
+        <p>The softmax forces every row to sum to one. A head that has nothing useful to do at some position still has to put its budget somewhere. The trick models learn is to park it on a token whose $\lVert f \rVert$ is close to zero: the head attends heavily and writes almost nothing, and by the convex-combination property its output shrinks toward zero. That parking spot is the <strong>attention sink</strong>, a substitute for the off switch the architecture doesn't have.</p>
+
+        <p>The sink is usually position 1. It sits inside every destination's causal window, and Xiao et al. showed it is the position that matters, not the token: replace the first tokens with line breaks and the model still dumps attention there. In chat models position 1 is always BOS, which is why you see a bright BOS column in nearly every attention map. That column says almost nothing about meaning.</p>
+
+        <p>Here is where it stops being noise and becomes a confound. Suppose you insert an adversarial block and see the template tokens attending to it heavily. Two very different things produce that picture:</p>
+
+        <ul>
+          <li><strong>Injection:</strong> the block has large transformed vectors and is writing content into the template tokens.</li>
+          <li><strong>Drainage:</strong> the block has become a new sink. It soaks up budget that used to go to the instruction and writes nothing back.</li>
+        </ul>
+
+        <p>Opposite mechanisms, identical attention weights. The toy head below makes that concrete. Try the two "block" presets: the left panel doesn't change at all, the right one does.</p>
+
+        <div class="attn-demo"></div>
+
+        <div class="callout">
+          <p>The numbers in this demo are hand-set to illustrate the mechanics, not measured from a real model. The logits and norms are editable under "Edit".</p>
+        </div>
+
+        <h2>Problem 3: magnitude is not effect</h2>
+
+        <p>Weighting by $\lVert f \rVert$ fixes the first two problems, but a big write is still not the same as an important one:</p>
+
+        <ul>
+          <li><strong>Direction.</strong> A large vector orthogonal to whatever downstream components read does nothing.</li>
+          <li><strong>Cancellation.</strong> $\sum \lVert c \rVert \neq \lVert \sum c \rVert$. Two heads can write opposing vectors that are both large and sum to almost zero.</li>
+          <li><strong>Nonlinearity.</strong> MLPs, later attention layers and normalization can amplify or suppress a write.</li>
+        </ul>
+
+        <h2>A ladder of measurements</h2>
+
+        <p>Putting it together, I find it useful to think of attribution claims as rungs, each licensing a stronger statement than the last:</p>
+
+        <table>
+          <thead>
+            <tr><th></th><th>Question</th><th>Quantity</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>How was the budget divided across sources?</td><td>$\alpha(i,j)$</td></tr>
+            <tr><td>2</td><td>How much content did $j$ write into $i$?</td><td>$\alpha(i,j)\,\lVert f(j) \rVert$</td></tr>
+            <tr><td>2′</td><td>…along the direction my hypothesis names?</td><td>$\langle c(i,j), \hat{u} \rangle$</td></tr>
+            <tr><td>3</td><td>Did that write causally change the output?</td><td>$\Delta$ logit or probe score under activation patching</td></tr>
+          </tbody>
+        </table>
+
+        <p>Two notes on using it. First, summing across heads only makes sense from rung 2 up: at rung 1 every head's row sums to one by construction, so a head moving nothing counts as much as a head moving everything. Second, rung 3 is the only climb that changes the <em>kind</em> of claim, from correlational to causal. The mechanistic jailbreak results that stuck all got there: Arditi et al. ablate and add the refusal direction, Zhao et al. steer harmfulness and refusal separately, and Ben-Tov et al. suppress the hijacking they measure and cut attack success by up to roughly half.</p>
+
+        <h2>What this means for jailbreak analysis</h2>
+
+        <p>"The suffix hijacks attention" is a rung-1 statement, and rung 1 can't distinguish a suffix that writes into the chat template from one that merely drains budget away from the harmful instruction. Both end in the same place, refusal suppressed, but they are different stories about how the model was fooled. Telling them apart needs at least rung 2, measured against random blocks at the same position so the distance effect from RoPE cancels out, and rung 3 to check that the measured route is the one doing the work.</p>
+
+        <p>None of this means attention maps are useless. They are a fine first look at routing. They just answer "where did the head look?", and the question we usually care about is "what got through?".</p>
+
+        <h2>References</h2>
+
+        <ol class="refs">
+          <li>Kobayashi, Kuribayashi, Yokoi, Inui. <a href="https://aclanthology.org/2020.emnlp-main.574" target="_blank" rel="noopener">Attention is Not Only a Weight: Analyzing Transformers with Vector Norms</a>. EMNLP 2020.</li>
+          <li>Elhage et al. <a href="https://transformer-circuits.pub/2021/framework/index.html" target="_blank" rel="noopener">A Mathematical Framework for Transformer Circuits</a>. Transformer Circuits Thread, 2021.</li>
+          <li>Xiao, Tian, Chen, Han, Lewis. <a href="https://arxiv.org/abs/2309.17453" target="_blank" rel="noopener">Efficient Streaming Language Models with Attention Sinks</a>. ICLR 2024.</li>
+          <li>Sun, Chen, Kolter, Liu. <a href="https://arxiv.org/abs/2402.17762" target="_blank" rel="noopener">Massive Activations in Large Language Models</a>. COLM 2024.</li>
+          <li>Arditi et al. <a href="https://arxiv.org/abs/2406.11717" target="_blank" rel="noopener">Refusal in Language Models Is Mediated by a Single Direction</a>. NeurIPS 2024.</li>
+          <li>Zhao et al. <a href="https://arxiv.org/abs/2507.11878" target="_blank" rel="noopener">LLMs Encode Harmfulness and Refusal Separately</a>. NeurIPS 2025.</li>
+          <li>Ben-Tov, Geva, Sharif. <a href="https://arxiv.org/abs/2506.12880" target="_blank" rel="noopener">Universal Jailbreak Suffixes Are Strong Attention Hijackers</a>. TACL 2026.</li>
+        </ol>
+
+      </div>
+
+      <p class="post-foot"><a href="../blog.html">← all posts</a></p>
+    </article>
+
+  </div>
+</main>
+
+<footer class="colophon">
+  <div class="wrap">
+    <span>© 2026 Hicham Eddoubi</span>
+    <span>Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a></span>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/attn-demo.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.querySelector(".prose"), {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false }
+      ],
+      ignoredClasses: ["attn-demo"],
+      throwOnError: false
+    });
+  });
+</script>
+</body>
+</html>
