@@ -574,6 +574,16 @@ h3 {
   padding: 0.18rem 0.6rem;
 }
 
+/* reader level: "deep dive" (technical) vs "for everyone" (layman-friendly) */
+.post-meta .tag.level {
+  background: transparent;
+  border: 1px solid currentColor;
+  padding: calc(0.18rem - 1px) calc(0.6rem - 1px);
+}
+.post-meta .tag.level-deep { color: var(--accent); }
+.post-meta .tag.level-easy { color: var(--muted); }
+.level-legend { margin-bottom: 2.25rem; }
+
 /* ---------- single post ---------- */
 
 .post-head {

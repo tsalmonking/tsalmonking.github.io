@@ -60,7 +60,8 @@ Copy one `<article class="pub">` block in `publications.html` and edit it. Wrap 
 
 1. `cp posts/_template.html posts/my-post-title.html` — the filename becomes the URL.
 2. Fill in the TODOs: `<title>`, the meta description, the date in both the `datetime`
-   attribute and the visible text, reading time, tags, headline, body.
+   attribute and the visible text, reading time, tags, headline, body. Keep one reader-level
+   tag (`deep dive` = technical, `for everyone` = layman-friendly) and copy it to the `blog.html` entry.
 3. Add an `<li>` at the top of the `<ul class="post-list">` in `blog.html`, copying the
    existing one.
 4. Add an `<item>` at the top of `feed.xml` if you want the post in the RSS feed.
