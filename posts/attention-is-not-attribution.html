@@ -88,19 +88,23 @@
 
         <p>The sink is usually position 1. It sits inside every destination's causal window, and Xiao et al. showed it is the position that matters, not the token: replace the first tokens with line breaks and the model still dumps attention there. In chat models position 1 is always BOS, which is why you see a bright BOS column in nearly every attention map. That column says almost nothing about meaning.</p>
 
-        <p>Here is where it stops being noise and becomes a confound. Suppose you insert an adversarial block and see the template tokens attending to it heavily. Two very different things produce that picture:</p>
+        <p>Here is where it stops being noise and becomes a confound. Suppose you insert adversarial tokens and see the template tokens attending to them heavily. Two very different things produce that picture:</p>
 
         <ul>
-          <li><strong>Injection:</strong> the block has large transformed vectors and is writing content into the template tokens.</li>
-          <li><strong>Drainage:</strong> the block has become a new sink. It soaks up budget that used to go to the instruction and writes nothing back.</li>
+          <li><strong>Injection:</strong> the adversarial tokens have large transformed vectors and are writing content into the template tokens.</li>
+          <li><strong>Drainage:</strong> the adversarial tokens have become a new sink. They soak up budget that used to go to the instruction and write nothing back.</li>
         </ul>
 
-        <p>Opposite mechanisms, identical attention weights. The toy head below makes that concrete. Try the two "block" presets: the left panel doesn't change at all, the right one does.</p>
+        <p>Opposite mechanisms, identical attention weights. The toy head below makes that concrete. Try the two "adversarial tokens" presets: the left panel doesn't change at all, the right one does.</p>
 
         <div class="attn-demo"></div>
 
         <div class="callout">
           <p>The numbers in this demo are hand-set to illustrate the mechanics, not measured from a real model. The logits and norms are editable under "Edit".</p>
+        </div>
+
+        <div class="callout">
+          <p>The adversarial tokens illustrated are merely for showcasing how it works, more often than not they are rarely interpretable, this will be addressed (hopefully) in later blog posts :)</p>
         </div>
 
         <h2>Problem 3: magnitude is not effect</h2>
@@ -133,7 +137,7 @@
 
         <h2>What this means for jailbreak analysis</h2>
 
-        <p>"The suffix hijacks attention" is a level-1 statement, and level 1 can't distinguish a suffix that writes into the chat template from one that merely drains budget away from the harmful instruction. Both end in the same place, refusal suppressed, but they are different stories about how the model was fooled. Telling them apart needs at least level 2, measured against random blocks at the same position so the distance effect from RoPE cancels out, and level 3 to check that the measured route is the one doing the work.</p>
+        <p>"The suffix hijacks attention" is a level-1 statement, and level 1 can't distinguish a suffix that writes into the chat template from one that merely drains budget away from the harmful instruction. Both end in the same place, refusal suppressed, but they are different stories about how the model was fooled. Telling them apart needs at least level 2, measured against random tokens at the same position so the distance effect from RoPE cancels out, and level 3 to check that the measured route is the one doing the work.</p>
 
         <p>None of this means attention maps are useless. They are a fine first look at routing. They just answer "where did the head look?", and the question we usually care about is "what got through?".</p>
 

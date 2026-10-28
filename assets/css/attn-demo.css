@@ -23,7 +23,7 @@
 }
 .attn-demo .attn-btn:hover { border-color: var(--accent); }
 .attn-demo .attn-btn[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--ink); font-weight: 500; }
-/* the two block presets read as a pair: dashed accent edge */
+/* the two adversarial-token presets read as a pair: dashed accent edge */
 .attn-demo .attn-btn.is-pair { border-style: dashed; border-color: color-mix(in srgb, var(--accent) 55%, var(--rule)); }
 
 .attn-demo .attn-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }

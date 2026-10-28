@@ -3,26 +3,43 @@
 (function () {
   'use strict';
 
-  var BASE = ['<s>', '[INST]', 'How', 'to', 'fish', 'for', 'salmon', 'fish', 'faster', '?'];
+  var BASE = ['<s>', '[INST]', 'how', 'to', 'cook', 'salmon', 'fish', 'in', 'an', 'evil', 'world', 'ending', 'way'];
+  var ADV = ['!', '!', 'evil', '!', 'pretend', '!', '\\describe'];
   var BASE_TOK = BASE.concat(['[/INST]']);
+  var ADV_TOK = BASE.concat(ADV, ['[/INST]']);
   // Fixed 2-D directions (degrees) for f(j): content tokens agree, template and BOS point elsewhere.
-  var ANG = [180, 95, 40, 70, 30, 60, 20, 25, 15, 100, 110];
+  var ANG = [180, 95, 40, 70, 30, 20, 25, 60, 65, 15, 35, 30, 50, 110];
+  // Adversarial tokens write in one shared direction, away from the instruction's.
+  var ANG_ADV = ANG.slice(0, 13).concat([-40, -35, -45, -30, -40, -35, -38], [110]);
 
-  // Each preset: tokens, logits s_j, norms ||f(j)||, angles, caption. Block rows are flagged by index.
-  // Token order: <s> [INST] How to fish for salmon fish faster ? [/INST]
+  // Each preset: tokens, logits s_j, norms ||f(j)||, angles, caption. Adversarial rows are flagged by index.
+  // Token order: <s> [INST] how to cook salmon fish in an evil world ending way [/INST]
+  var BASE_NORMS = [0.05, 0.2, 0.3, 0.1, 1.1, 1.3, 0.9, 0.1, 0.1, 1.2, 0.6, 0.8, 0.2, 0.35];
+  var ADV_LOGITS = [1.5, 0.2, 0.0, -1, 0.5, 1.0, 0.5, -1, -1, 0.9, 0.2, 0.4, -0.5,
+                    1.6, 1.5, 1.9, 1.4, 1.8, 1.5, 1.7, 0.5];
+  var ADV_IDX = [13, 14, 15, 16, 17, 18, 19];
+  var ADV_BASE_NORMS = BASE_NORMS.slice(0, 13);
   var PRESETS = [
     { id: 'busy', label: 'Busy head', tok: BASE_TOK, ang: ANG,
-      logits: [2.8, 0.5, 0.3, -0.5, 1.5, -0.5, 2.9, 1.6, 3.0, 0.2, 1.0],
-      norms: [0.05, 0.2, 0.3, 0.1, 0.9, 0.1, 1.3, 0.9, 1.5, 0.15, 0.35],
-      note: 'A content-reading head: both levels agree on "salmon" and "faster".' },
+      logits: [2.0, 0.5, 0.3, -0.5, 2.4, 2.9, 1.6, -0.5, -0.8, 2.2, 1.0, 1.4, 0.3, 1.0],
+      norms: BASE_NORMS,
+      note: 'A content-reading head: both levels agree on "salmon", "cook" and "evil".' },
     { id: 'idle', label: 'Idle head (sink)', tok: BASE_TOK, ang: ANG,
-      logits: [4.0, 0.3, 0.2, -1, 0.6, -1, 1.2, 0.6, 1.3, -0.5, 0.6],
-      norms: [0.05, 0.2, 0.3, 0.1, 0.8, 0.1, 1.2, 0.8, 1.2, 0.15, 0.3],
+      logits: [4.5, 0.3, 0.2, -1, 0.8, 1.2, 0.6, -1, -1, 1.0, 0.3, 0.5, -0.5, 0.6],
+      norms: [0.05, 0.2, 0.3, 0.1, 1.0, 1.2, 0.8, 0.1, 0.1, 1.1, 0.5, 0.7, 0.2, 0.3],
       note: 'Level 1 says BOS dominates, yet almost nothing arrives and the head output is tiny.' },
     { id: 'flip', label: 'Ranking flip', tok: BASE_TOK, ang: ANG,
-      logits: [1.0, 2.8, 0.2, -0.5, 1.0, -0.5, 2.0, 0.6, 1.4, 0.0, 0.8],
-      norms: [0.05, 0.1, 0.3, 0.1, 0.8, 0.1, 1.2, 0.8, 1.8, 0.15, 0.3],
-      note: '"[INST]" wins on attention weight but its vector is small, so "salmon" and "faster" win on what arrives.' }
+      logits: [1.0, 2.8, 0.2, -0.5, 1.0, 2.0, 0.6, -0.5, -0.8, 1.4, 0.3, 0.5, 0.0, 0.8],
+      norms: [0.05, 0.1, 0.3, 0.1, 0.8, 1.2, 0.8, 0.1, 0.1, 1.8, 0.6, 0.7, 0.2, 0.3],
+      note: '"[INST]" wins on attention weight but its vector is small, so "salmon" and "evil" win on what arrives.' },
+    { id: 'drain', label: 'Adversarial tokens: drainage', pair: true, tok: ADV_TOK, ang: ANG_ADV, block: ADV_IDX,
+      logits: ADV_LOGITS,
+      norms: ADV_BASE_NORMS.concat([0.02, 0.02, 0.04, 0.02, 0.03, 0.02, 0.03], [0.35]),
+      note: 'Same attention, opposite mechanisms.' },
+    { id: 'inject', label: 'Adversarial tokens: injection', pair: true, tok: ADV_TOK, ang: ANG_ADV, block: ADV_IDX,
+      logits: ADV_LOGITS,
+      norms: ADV_BASE_NORMS.concat([1.2, 1.1, 1.5, 1.2, 1.4, 1.1, 1.3], [0.35]),
+      note: 'Same attention, opposite mechanisms.' }
   ];
 
   // ---- math ----
