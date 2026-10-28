@@ -3,36 +3,38 @@
 (function () {
   'use strict';
 
-  var BASE = ['<s>', '[INST]', 'Write', 'a', 'poem', 'about', 'rain'];
+  var BASE = ['<s>', '[INST]', 'How', 'to', 'fish', 'for', 'salmon', 'fish', 'faster', '?'];
   var BLOCK = ['describing', '.\\+', 'similarly'];
   var BASE_TOK = BASE.concat(['[/INST]']);
   var BLOCK_TOK = BASE.concat(BLOCK, ['[/INST]']);
   // Fixed 2-D directions (degrees) for f(j): content tokens agree, template and BOS point elsewhere.
-  var ANG = [180, 95, 40, 70, 20, 60, 15, 110];
-  var ANG_BLOCK = ANG.slice(0, 7).concat([-40, 150, 85], [110]);
+  var ANG = [180, 95, 40, 70, 30, 60, 20, 25, 15, 100, 110];
+  var ANG_BLOCK = ANG.slice(0, 10).concat([-40, 150, 85], [110]);
 
   // Each preset: tokens, logits s_j, norms ||f(j)||, angles, caption. Block rows are flagged by index.
-  var BLOCK_LOGITS = [1.5, 0.2, 0.0, -1, 1.0, -0.3, 0.9, 1.9, 1.7, 1.8, 0.5];
+  // Token order: <s> [INST] How to fish for salmon fish faster ? [/INST]
+  var BLOCK_LOGITS = [1.5, 0.2, 0.0, -1, 0.5, -1, 1.0, 0.5, 0.9, -0.5, 1.9, 1.7, 1.8, 0.5];
+  var BLOCK_IDX = [10, 11, 12];
   var PRESETS = [
     { id: 'busy', label: 'Busy head', tok: BASE_TOK, ang: ANG,
-      logits: [2.8, 0.5, 0.4, -0.5, 2.9, 0.2, 3.1, 1.0],
-      norms: [0.05, 0.2, 0.3, 0.1, 1.3, 0.2, 1.5, 0.35],
-      note: 'A content-reading head: both levels agree on "poem" and "rain".' },
+      logits: [2.8, 0.5, 0.3, -0.5, 1.5, -0.5, 2.9, 1.6, 3.0, 0.2, 1.0],
+      norms: [0.05, 0.2, 0.3, 0.1, 0.9, 0.1, 1.3, 0.9, 1.5, 0.15, 0.35],
+      note: 'A content-reading head: both levels agree on "salmon" and "faster".' },
     { id: 'idle', label: 'Idle head (sink)', tok: BASE_TOK, ang: ANG,
-      logits: [4.0, 0.3, 0.2, -1, 1.2, -0.3, 1.3, 0.6],
-      norms: [0.05, 0.2, 0.3, 0.1, 1.2, 0.2, 1.2, 0.3],
+      logits: [4.0, 0.3, 0.2, -1, 0.6, -1, 1.2, 0.6, 1.3, -0.5, 0.6],
+      norms: [0.05, 0.2, 0.3, 0.1, 0.8, 0.1, 1.2, 0.8, 1.2, 0.15, 0.3],
       note: 'Level 1 says BOS dominates, yet almost nothing arrives and the head output is tiny.' },
     { id: 'flip', label: 'Ranking flip', tok: BASE_TOK, ang: ANG,
-      logits: [1.0, 2.8, 0.2, -0.5, 2.0, 0.0, 1.4, 0.8],
-      norms: [0.05, 0.1, 0.3, 0.1, 1.2, 0.2, 1.8, 0.3],
-      note: '"[INST]" wins on attention weight but its vector is small, so "rain" and "poem" win on what arrives.' },
-    { id: 'drain', label: 'Block: drainage', pair: true, tok: BLOCK_TOK, ang: ANG_BLOCK, block: [7, 8, 9],
+      logits: [1.0, 2.8, 0.2, -0.5, 1.0, -0.5, 2.0, 0.6, 1.4, 0.0, 0.8],
+      norms: [0.05, 0.1, 0.3, 0.1, 0.8, 0.1, 1.2, 0.8, 1.8, 0.15, 0.3],
+      note: '"[INST]" wins on attention weight but its vector is small, so "salmon" and "faster" win on what arrives.' },
+    { id: 'drain', label: 'Block: drainage', pair: true, tok: BLOCK_TOK, ang: ANG_BLOCK, block: BLOCK_IDX,
       logits: BLOCK_LOGITS,
-      norms: [0.05, 0.2, 0.3, 0.1, 1.3, 0.2, 1.5, 0.03, 0.02, 0.03, 0.35],
+      norms: [0.05, 0.2, 0.3, 0.1, 0.9, 0.1, 1.3, 0.9, 1.5, 0.15, 0.03, 0.02, 0.03, 0.35],
       note: 'Same attention, opposite mechanisms.' },
-    { id: 'inject', label: 'Block: injection', pair: true, tok: BLOCK_TOK, ang: ANG_BLOCK, block: [7, 8, 9],
+    { id: 'inject', label: 'Block: injection', pair: true, tok: BLOCK_TOK, ang: ANG_BLOCK, block: BLOCK_IDX,
       logits: BLOCK_LOGITS,
-      norms: [0.05, 0.2, 0.3, 0.1, 1.3, 0.2, 1.5, 1.4, 1.3, 1.5, 0.35],
+      norms: [0.05, 0.2, 0.3, 0.1, 0.9, 0.1, 1.3, 0.9, 1.5, 0.15, 1.4, 1.3, 1.5, 0.35],
       note: 'Same attention, opposite mechanisms.' }
   ];
 
