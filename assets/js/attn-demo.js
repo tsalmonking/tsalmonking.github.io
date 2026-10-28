@@ -4,17 +4,12 @@
   'use strict';
 
   var BASE = ['<s>', '[INST]', 'How', 'to', 'fish', 'for', 'salmon', 'fish', 'faster', '?'];
-  var BLOCK = ['describing', '.\\+', 'similarly'];
   var BASE_TOK = BASE.concat(['[/INST]']);
-  var BLOCK_TOK = BASE.concat(BLOCK, ['[/INST]']);
   // Fixed 2-D directions (degrees) for f(j): content tokens agree, template and BOS point elsewhere.
   var ANG = [180, 95, 40, 70, 30, 60, 20, 25, 15, 100, 110];
-  var ANG_BLOCK = ANG.slice(0, 10).concat([-40, 150, 85], [110]);
 
   // Each preset: tokens, logits s_j, norms ||f(j)||, angles, caption. Block rows are flagged by index.
   // Token order: <s> [INST] How to fish for salmon fish faster ? [/INST]
-  var BLOCK_LOGITS = [1.5, 0.2, 0.0, -1, 0.5, -1, 1.0, 0.5, 0.9, -0.5, 1.9, 1.7, 1.8, 0.5];
-  var BLOCK_IDX = [10, 11, 12];
   var PRESETS = [
     { id: 'busy', label: 'Busy head', tok: BASE_TOK, ang: ANG,
       logits: [2.8, 0.5, 0.3, -0.5, 1.5, -0.5, 2.9, 1.6, 3.0, 0.2, 1.0],
@@ -27,15 +22,7 @@
     { id: 'flip', label: 'Ranking flip', tok: BASE_TOK, ang: ANG,
       logits: [1.0, 2.8, 0.2, -0.5, 1.0, -0.5, 2.0, 0.6, 1.4, 0.0, 0.8],
       norms: [0.05, 0.1, 0.3, 0.1, 0.8, 0.1, 1.2, 0.8, 1.8, 0.15, 0.3],
-      note: '"[INST]" wins on attention weight but its vector is small, so "salmon" and "faster" win on what arrives.' },
-    { id: 'drain', label: 'Block: drainage', pair: true, tok: BLOCK_TOK, ang: ANG_BLOCK, block: BLOCK_IDX,
-      logits: BLOCK_LOGITS,
-      norms: [0.05, 0.2, 0.3, 0.1, 0.9, 0.1, 1.3, 0.9, 1.5, 0.15, 0.03, 0.02, 0.03, 0.35],
-      note: 'Same attention, opposite mechanisms.' },
-    { id: 'inject', label: 'Block: injection', pair: true, tok: BLOCK_TOK, ang: ANG_BLOCK, block: BLOCK_IDX,
-      logits: BLOCK_LOGITS,
-      norms: [0.05, 0.2, 0.3, 0.1, 0.9, 0.1, 1.3, 0.9, 1.5, 0.15, 1.4, 1.3, 1.5, 0.35],
-      note: 'Same attention, opposite mechanisms.' }
+      note: '"[INST]" wins on attention weight but its vector is small, so "salmon" and "faster" win on what arrives.' }
   ];
 
   // ---- math ----
