@@ -113,9 +113,9 @@
           <li><strong>Nonlinearity.</strong> MLPs, later attention layers and normalization can amplify or suppress a write.</li>
         </ul>
 
-        <h2>A ladder of measurements</h2>
+        <h2>The three levels</h2>
 
-        <p>Putting it together, I find it useful to think of attribution claims as rungs, each licensing a stronger statement than the last:</p>
+        <p>Putting it together, I find it useful to think of attribution claims in levels, each licensing a stronger statement than the last:</p>
 
         <table>
           <thead>
@@ -129,11 +129,11 @@
           </tbody>
         </table>
 
-        <p>Two notes on using it. First, summing across heads only makes sense from rung 2 up: at rung 1 every head's row sums to one by construction, so a head moving nothing counts as much as a head moving everything. Second, rung 3 is the only climb that changes the <em>kind</em> of claim, from correlational to causal. The mechanistic jailbreak results that stuck all got there: Arditi et al. ablate and add the refusal direction, Zhao et al. steer harmfulness and refusal separately, and Ben-Tov et al. suppress the hijacking they measure and cut attack success by up to roughly half.</p>
+        <p>Two notes on using it. First, summing across heads only makes sense from level 2 up: at level 1 every head's row sums to one by construction, so a head moving nothing counts as much as a head moving everything. Second, level 3 is the only climb that changes the <em>kind</em> of claim, from correlational to causal. The mechanistic jailbreak results that stuck all got there: Arditi et al. ablate and add the refusal direction, Zhao et al. steer harmfulness and refusal separately, and Ben-Tov et al. suppress the hijacking they measure and cut attack success by up to roughly half.</p>
 
         <h2>What this means for jailbreak analysis</h2>
 
-        <p>"The suffix hijacks attention" is a rung-1 statement, and rung 1 can't distinguish a suffix that writes into the chat template from one that merely drains budget away from the harmful instruction. Both end in the same place, refusal suppressed, but they are different stories about how the model was fooled. Telling them apart needs at least rung 2, measured against random blocks at the same position so the distance effect from RoPE cancels out, and rung 3 to check that the measured route is the one doing the work.</p>
+        <p>"The suffix hijacks attention" is a level-1 statement, and level 1 can't distinguish a suffix that writes into the chat template from one that merely drains budget away from the harmful instruction. Both end in the same place, refusal suppressed, but they are different stories about how the model was fooled. Telling them apart needs at least level 2, measured against random blocks at the same position so the distance effect from RoPE cancels out, and level 3 to check that the measured route is the one doing the work.</p>
 
         <p>None of this means attention maps are useless. They are a fine first look at routing. They just answer "where did the head look?", and the question we usually care about is "what got through?".</p>
 
