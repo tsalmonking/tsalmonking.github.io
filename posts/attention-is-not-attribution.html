@@ -91,8 +91,8 @@
         <p>Here is where it stops being noise and becomes a confound. Suppose you insert adversarial tokens and see the template tokens attending to them heavily. Two very different things produce that picture:</p>
 
         <ul>
-          <li><strong>Injection:</strong> the adversarial tokens have large transformed vectors and are writing content into the template tokens.</li>
-          <li><strong>Drainage:</strong> the adversarial tokens have become a new sink. They soak up budget that used to go to the instruction and write nothing back.</li>
+          <li><strong>Attention hijacking:</strong> the adversarial tokens have large transformed vectors and are writing content into the template tokens.</li>
+          <li><strong>Attention sink:</strong> the adversarial tokens have become a new sink. They soak up budget that used to go to the instruction and write nothing back.</li>
         </ul>
 
         <p>Opposite mechanisms, identical attention weights. The toy head below makes that concrete. Try the two "adversarial tokens" presets: the left panel doesn't change at all, the right one does.</p>

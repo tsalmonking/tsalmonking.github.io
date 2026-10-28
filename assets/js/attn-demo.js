@@ -32,11 +32,11 @@
       logits: [1.0, 2.8, 0.2, -0.5, 1.0, 2.0, 0.6, -0.5, -0.8, 1.4, 0.3, 0.5, 0.0, 0.8],
       norms: [0.05, 0.1, 0.3, 0.1, 0.8, 1.2, 0.8, 0.1, 0.1, 1.8, 0.6, 0.7, 0.2, 0.3],
       note: '"[INST]" wins on attention weight but its vector is small, so "salmon" and "evil" win on what arrives.' },
-    { id: 'drain', label: 'Adversarial tokens: drainage', pair: true, tok: ADV_TOK, ang: ANG_ADV, block: ADV_IDX,
+    { id: 'drain', label: 'Adversarial tokens: attention sink', pair: true, tok: ADV_TOK, ang: ANG_ADV, block: ADV_IDX,
       logits: ADV_LOGITS,
       norms: ADV_BASE_NORMS.concat([0.02, 0.02, 0.04, 0.02, 0.03, 0.02, 0.03], [0.35]),
       note: 'Same attention, opposite mechanisms.' },
-    { id: 'inject', label: 'Adversarial tokens: injection', pair: true, tok: ADV_TOK, ang: ANG_ADV, block: ADV_IDX,
+    { id: 'inject', label: 'Adversarial tokens: attention hijacking', pair: true, tok: ADV_TOK, ang: ANG_ADV, block: ADV_IDX,
       logits: ADV_LOGITS,
       norms: ADV_BASE_NORMS.concat([1.2, 1.1, 1.5, 1.2, 1.4, 1.1, 1.3], [0.35]),
       note: 'Same attention, opposite mechanisms.' }
