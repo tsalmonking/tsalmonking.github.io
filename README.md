@@ -45,6 +45,8 @@ assets/js/main.js        theme toggle + portrait perturbation toggle
 
 ## Editing
 
+CSS/JS links carry a `?v=<commit>` suffix so browsers don't keep a stale copy (GitHub Pages lets them cache for 10 min). After changing a `.css` or `.js` file, bump the suffix in every page (any new value works).
+
 All colours and typefaces are CSS custom properties at the top of `main.css`. Change `--accent` and the
 whole site follows. Dark-mode values live in the `html[data-theme="dark"]` block right below.
 
