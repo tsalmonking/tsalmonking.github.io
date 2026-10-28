@@ -137,7 +137,7 @@
 
         <h2>What this means for jailbreak analysis</h2>
 
-        <p>"The suffix hijacks attention" is a level-1 statement, and level 1 can't distinguish a suffix that writes into the chat template from one that merely drains budget away from the harmful instruction. Both end in the same place, refusal suppressed, but they are different stories about how the model was fooled. Telling them apart needs at least level 2, measured against random tokens at the same position so the distance effect from RoPE cancels out, and level 3 to check that the measured route is the one doing the work.</p>
+        <p>"The suffix hijacks attention" is a level-1 statement, and level 1 can't distinguish a suffix that writes into the chat template from one that merely acts as an attention sink, pulling budget away from the harmful instruction. Both end in the same place, refusal suppressed, but they are different stories about how the model was fooled. Telling them apart needs at least level 2, measured against random tokens at the same position so the distance effect from RoPE cancels out, and level 3 to check that the measured route is the one doing the work.</p>
 
         <p>None of this means attention maps are useless. They are a fine first look at routing. They just answer "where did the head look?", and the question we usually care about is "what got through?".</p>
 

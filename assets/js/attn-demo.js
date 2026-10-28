@@ -32,11 +32,11 @@
       logits: [1.0, 2.8, 0.2, -0.5, 1.0, 2.0, 0.6, -0.5, -0.8, 1.4, 0.3, 0.5, 0.0, 0.8],
       norms: [0.05, 0.1, 0.3, 0.1, 0.8, 1.2, 0.8, 0.1, 0.1, 1.8, 0.6, 0.7, 0.2, 0.3],
       note: '"[INST]" wins on attention weight but its vector is small, so "salmon" and "evil" win on what arrives.' },
-    { id: 'drain', label: 'Adversarial tokens: attention sink', pair: true, tok: ADV_TOK, ang: ANG_ADV, block: ADV_IDX,
+    { id: 'sink', label: 'Adversarial tokens: attention sink', pair: true, tok: ADV_TOK, ang: ANG_ADV, adv: ADV_IDX,
       logits: ADV_LOGITS,
       norms: ADV_BASE_NORMS.concat([0.02, 0.02, 0.04, 0.02, 0.03, 0.02, 0.03], [0.35]),
       note: 'Same attention, opposite mechanisms.' },
-    { id: 'inject', label: 'Adversarial tokens: attention hijacking', pair: true, tok: ADV_TOK, ang: ANG_ADV, block: ADV_IDX,
+    { id: 'hijack', label: 'Adversarial tokens: attention hijacking', pair: true, tok: ADV_TOK, ang: ANG_ADV, adv: ADV_IDX,
       logits: ADV_LOGITS,
       norms: ADV_BASE_NORMS.concat([1.2, 1.1, 1.5, 1.2, 1.4, 1.1, 1.3], [0.35]),
       note: 'Same attention, opposite mechanisms.' }
@@ -123,7 +123,7 @@
       var p = PRESETS[cur]; l1.textContent = ''; l2.textContent = '';
       rows1 = []; rows2 = [];
       p.tok.forEach(function (t, j) {
-        var cls = p.block && p.block.indexOf(j) >= 0 ? ' is-block' : '';
+        var cls = p.adv && p.adv.indexOf(j) >= 0 ? ' is-adv' : '';
         [[l1, rows1], [l2, rows2]].forEach(function (pair) {
           var o = makeRow(t, cls);
           if (j === 0 && pair[0] === l1) { o.sink = el('span', 'attn-sink', 'sink'); o.r.firstChild.appendChild(o.sink); }
@@ -134,7 +134,7 @@
     function buildEdit() {
       var p = PRESETS[cur]; rowsEd.textContent = ''; edOut = [];
       p.tok.forEach(function (t, j) {
-        var r = el('div', 'attn-erow' + (p.block && p.block.indexOf(j) >= 0 ? ' is-block' : ''));
+        var r = el('div', 'attn-erow' + (p.adv && p.adv.indexOf(j) >= 0 ? ' is-adv' : ''));
         r.appendChild(el('span', 'attn-tok', t));
         [['logit', 'logits', -4, 6, 0.1], ['norm ‖f‖', 'norms', 0, 2, 0.01]].forEach(function (c) {
           var id = uid + c[1] + j, lab = el('label', 'attn-elab'), inp = el('input'), out = el('output');
