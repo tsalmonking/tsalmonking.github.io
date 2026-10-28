@@ -584,6 +584,26 @@ h3 {
 .post-meta .tag.level-easy { color: var(--muted); }
 .level-legend { margin-bottom: 2.25rem; }
 
+/* depth filter on the blog index (buttons reuse the level tag look) */
+.post-meta .tag.level-all { color: var(--ink); }
+.level-filter button.tag {
+  font: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+}
+.level-filter button.tag[aria-pressed="true"],
+.post-meta a.tag.level:hover { background: var(--accent-soft); }
+.level-filter button.tag[aria-pressed="false"] { opacity: 0.7; }
+.level-filter button.tag:hover { opacity: 1; }
+.level-filter button.tag:focus-visible,
+.post-meta a.tag.level:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.post-meta a.tag.level { text-decoration: none; }
+.post-list > li[hidden] { display: none; }
+.post-list > li.is-first { padding-top: 0; }
+.post-list > li.is-last { border-bottom: none; }
+.level-empty { color: var(--muted); }
+.level-filter .lv { display: inline-flex; align-items: center; gap: 0.5rem; white-space: nowrap; }
+
 /* ---------- single post ---------- */
 
 .post-head {

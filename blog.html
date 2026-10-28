@@ -37,11 +37,11 @@
 
     <h1 class="page-title">Blog</h1>
     <p class="page-intro">Working notes on robustness evaluation, benchmark design, and the parts of detection research that don't fit in a paper.</p>
-    <p class="post-meta level-legend"><span class="tag level level-deep" title="Technical: assumes ML background">deep dive</span> assumes some ML background <span class="dot">·</span> <span class="tag level level-easy" title="Layman-friendly: no background needed">for everyone</span> no background needed</p>
+    <p class="post-meta level-legend level-filter" role="group" aria-label="Filter posts by depth"><button type="button" class="tag level level-all" data-level="all" aria-pressed="true">all</button> <span class="dot">·</span> <span class="lv"><button type="button" class="tag level level-deep" data-level="deep" aria-pressed="false" title="Technical: assumes ML background">deep dive</button> assumes some ML background</span> <span class="dot">·</span> <span class="lv"><button type="button" class="tag level level-easy" data-level="easy" aria-pressed="false" title="Layman-friendly: no background needed">for everyone</button> no background needed</span></p>
 
     <ul class="post-list">
 
-      <li>
+      <li data-level="deep">
         <p class="post-meta">
           <time datetime="2026-10-27">27 Oct 2026</time>
           <span class="tag level level-deep" title="Technical: assumes ML background">deep dive</span>
@@ -49,7 +49,7 @@
         <h3><a href="posts/attention-is-not-attribution.html">Attention is not attribution</a></h3>
       </li>
 
-      <li>
+      <li data-level="easy">
         <p class="post-meta">
           <time datetime="2026-10-07">7 Oct 2026</time>
           <span class="tag level level-easy" title="Layman-friendly: no background needed">for everyone</span>
@@ -58,6 +58,7 @@
       </li>
 
     </ul>
+    <p class="level-empty" hidden>No posts at this depth yet.</p>
 
   </div>
 </main>

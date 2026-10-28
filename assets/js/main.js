@@ -1,4 +1,4 @@
-/* Theme switch. No dependencies. */
+/* Theme switch and blog depth filter. No dependencies. */
 
 (function () {
   "use strict";
@@ -38,5 +38,47 @@
     apply(next);
     store("theme", next);
   });
+
+  /* ---------- blog depth filter ---------- */
+
+  var filter = document.querySelector(".level-filter");
+  if (filter) {
+    var items = document.querySelectorAll(".post-list > li[data-level]");
+    var empty = document.querySelector(".level-empty");
+
+    var setLevel = function (level, updateUrl) {
+      if (!filter.querySelector('button[data-level="' + level + '"]')) level = "all";
+      filter.querySelectorAll("button[data-level]").forEach(function (b) {
+        b.setAttribute("aria-pressed", b.getAttribute("data-level") === level ? "true" : "false");
+      });
+      var shown = [];
+      items.forEach(function (li) {
+        var match = level === "all" || li.getAttribute("data-level") === level;
+        li.hidden = !match;
+        li.classList.remove("is-first", "is-last");
+        if (match) shown.push(li);
+      });
+      if (shown.length) {
+        shown[0].classList.add("is-first");
+        shown[shown.length - 1].classList.add("is-last");
+      }
+      if (empty) empty.hidden = shown.length > 0;
+      if (updateUrl && window.history && window.URL) {
+        var url = new URL(window.location.href);
+        if (level === "all") url.searchParams.delete("level");
+        else url.searchParams.set("level", level);
+        window.history.replaceState(null, "", url);
+      }
+    };
+
+    filter.addEventListener("click", function (event) {
+      var b = event.target.closest("button[data-level]");
+      if (b) setLevel(b.getAttribute("data-level"), true);
+    });
+
+    var initial = "all";
+    try { initial = new URLSearchParams(window.location.search).get("level") || "all"; } catch (e) { /* old browser */ }
+    setLevel(initial, false);
+  }
 
 })();

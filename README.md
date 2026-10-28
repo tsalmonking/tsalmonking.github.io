@@ -63,7 +63,15 @@ Copy one `<article class="pub">` block in `publications.html` and edit it. Wrap 
    attribute and the visible text, reading time, tags, headline, body. Keep one reader-level
    tag (`deep dive` = technical, `for everyone` = layman-friendly) and copy it to the `blog.html` entry.
 3. Add an `<li>` at the top of the `<ul class="post-list">` in `blog.html`, copying the
-   existing one.
+   existing one. Set its `data-level` (`deep` or `easy`) to match the tag: the filter at the
+   top of the blog page uses it.
+
+**Depth filter.** The buttons at the top of `blog.html` (all / deep dive / for everyone) show
+only the posts with that `data-level`. The choice goes in the URL (`blog.html?level=deep`), so a
+filtered list can be linked, and the level tag on each post links back to it. To add a new
+level: add a button with a new `data-level` to the `.level-filter` line in `blog.html`, a
+`.post-meta .tag.level-<name> { color: … }` rule in `main.css`, and use that `data-level` on
+the posts.
 4. Add an `<item>` at the top of `feed.xml` if you want the post in the RSS feed.
 
 The template includes every element the stylesheet supports — headings, lists, code blocks,

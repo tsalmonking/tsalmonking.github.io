@@ -46,7 +46,7 @@
           <span class="dot">·</span>
           <span>9 min</span>
           <span class="tag">interpretability</span>
-          <span class="tag level level-deep" title="Technical: assumes ML background">deep dive</span>
+          <a class="tag level level-deep" href="../blog.html?level=deep" title="Technical: assumes ML background">deep dive</a>
         </p>
         <h1>Attention is not attribution</h1>
         <p class="standfirst">An attention weight tells you how a head divided its budget, not what each token actually delivered. Read on its own, it can rank sources backwards, and it can make two opposite mechanisms look exactly the same.</p>
@@ -170,6 +170,7 @@
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
+    if (!window.renderMathInElement) return;
     renderMathInElement(document.querySelector(".prose"), {
       delimiters: [
         { left: "$$", right: "$$", display: true },
