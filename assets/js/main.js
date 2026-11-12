@@ -81,4 +81,23 @@
     setLevel(initial, false);
   }
 
+
+  /* ---------- publications: abstract toggle, more authors ---------- */
+
+  document.addEventListener("click", function (event) {
+    var abs = event.target.closest(".abs-toggle");
+    if (abs) {
+      var p = abs.closest(".pub-body").querySelector(".abstract");
+      if (p) {
+        p.hidden = !p.hidden;
+        abs.setAttribute("aria-expanded", p.hidden ? "false" : "true");
+      }
+      return;
+    }
+    var more = event.target.closest(".more-authors");
+    if (more) {
+      more.replaceWith(document.createTextNode(more.getAttribute("data-authors")));
+    }
+  });
+
 })();

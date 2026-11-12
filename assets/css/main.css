@@ -328,51 +328,93 @@ h3 {
   padding-top: 0.22rem;
 }
 
-/* ---------- publications ---------- */
+/* ---------- publications (year-grouped list) ---------- */
+
+.pub-group {
+  position: relative;
+  border-top: 1px solid var(--rule);
+  margin-top: 2rem;
+  padding-top: 0.25rem;
+}
 
 .pub-year {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
-  color: var(--muted);
-  margin: 2.5rem 0 1rem;
-  padding-bottom: 0.4rem;
-  border-bottom: 1px solid var(--rule);
+  position: absolute;
+  top: 0.6rem;
+  right: 0;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 2rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--rule);
+  line-height: 1;
 }
 
-.pub-year:first-of-type { margin-top: 0; }
+[data-theme="dark"] .pub-year { color: color-mix(in srgb, var(--muted) 45%, transparent); }
+
+.pub-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 5.5rem 0 0;
+}
 
 .pub {
-  padding: 1.15rem 0;
-  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 1.25rem;
+  padding: 1.1rem 0;
 }
 
-.pub:last-child { border-bottom: none; }
+.pub-side { padding-top: 0.2rem; }
 
-.pub h3 { line-height: 1.4; margin-bottom: 0.3rem; }
+.pub-badge {
+  display: block;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  color: #fff;
+  background: var(--accent);
+  border-radius: 2px;
+  padding: 0.3rem 0.4rem;
+}
+
+.pub-title {
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--ink);
+  margin-bottom: 0.15rem;
+}
 
 .pub .authors {
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   color: var(--body);
-  margin: 0 0 0.35rem;
 }
 
 .pub .authors .me {
+  font-style: italic;
   color: var(--ink);
-  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.more-authors {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  border-bottom: 1px dashed var(--muted);
 }
 
 .pub .venue {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--muted);
-  margin: 0 0 0.6rem;
-}
-
-.pub .abstract {
-  font-size: 0.9375rem;
-  color: var(--muted);
-  margin: 0 0 0.7rem;
+  font-size: 0.9rem;
+  color: var(--body);
+  margin-bottom: 0.55rem;
 }
 
 .pub-links {
@@ -381,19 +423,44 @@ h3 {
   gap: 0.4rem;
 }
 
-.pub-links a {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.03em;
-  color: var(--accent);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-  padding: 0.16rem 0.5rem;
+.pub-links a,
+.pub-links button {
+  font-family: var(--font-body);
+  font-size: 0.64rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--body);
+  background: none;
+  border: 1px solid var(--body);
+  border-radius: 2px;
+  padding: 0.25rem 0.9rem;
+  cursor: pointer;
+  line-height: 1.5;
 }
 
-.pub-links a:hover {
+.pub-links a:hover,
+.pub-links button:hover,
+.pub-links button[aria-expanded="true"] {
+  color: var(--accent);
   border-color: var(--accent);
-  background: var(--accent-soft);
+  text-decoration: none;
+}
+
+.pub .abstract {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0.7rem 0 0;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+@media (max-width: 34rem) {
+  .pub-list { padding-right: 0; }
+  .pub-year { position: static; text-align: right; margin: 0.6rem 0 0; }
+  .pub { grid-template-columns: 1fr; gap: 0.5rem; }
+  .pub-badge { display: inline-block; min-width: 4.5rem; }
 }
 
 /* ---------- project cards ---------- */

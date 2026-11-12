@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/main.css?v=cce7476">
+<link rel="stylesheet" href="assets/css/main.css?v=pubs1">
 </head>
 <body>
 
@@ -35,49 +35,70 @@
   <div class="wrap">
 
     <h1 class="page-title">Research works</h1>
-    <p class="page-intro">Also on <a href="https://scholar.google.com/citations?user=aPghm40AAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>. Names in bold are mine.</p>
+    <p class="page-intro">Grouped by year, newest first. Also on <a href="https://scholar.google.com/citations?user=aPghm40AAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>.</p>
 
-    <section class="section">
-      <h2>Publications</h2>
+    <section class="pub-group">
+      <h2 class="pub-year">2026</h2>
+      <ol class="pub-list">
 
-    <article class="pub">
-      <h3>RAID: A Dataset for Testing the Adversarial Robustness of AI-Generated Image Detectors</h3>
-      <p class="authors"><span class="me">Hicham Eddoubi</span>, Jonas Ricker, Federico Cocchi, Lorenzo Baraldi, Angelo Sotgiu, Maura Pintor, Marcella Cornia, Lorenzo Baraldi, Asja Fischer, Rita Cucchiara, Battista Biggio</p>
-      <p class="venue">Computer Vision and Image Understanding (CVIU), 2026 (accepted)</p>
-      <p class="abstract">Detectors of AI-generated images report high accuracy, but they are almost always evaluated under idealised conditions. RAID is a dataset of 72k transferable adversarial examples, produced by an ensemble attack across seven detectors and four text-to-image generators, so that robustness can be measured without re-running an attack pipeline from scratch.</p>
-      <div class="pub-links">
-        <a href="https://arxiv.org/abs/2506.03988" target="_blank" rel="noopener">arXiv</a>
-        <a href="https://doi.org/10.48550/arXiv.2506.03988" target="_blank" rel="noopener">doi:10.48550/arXiv.2506.03988</a>
-        <a href="https://github.com/pralab/RAID" target="_blank" rel="noopener">code</a>
-        <a href="https://huggingface.co/papers/2506.03988" target="_blank" rel="noopener">hugging face</a>
-      </div>
-    </article>
+        <li class="pub">
+          <div class="pub-side"><abbr class="pub-badge" title="Computer Vision and Image Understanding">CVIU</abbr></div>
+          <div class="pub-body">
+            <div class="pub-title">RAID: A Dataset for Testing the Adversarial Robustness of AI-Generated Image Detectors</div>
+            <div class="authors"><span class="me">Hicham Eddoubi</span>, Jonas Ricker, Federico Cocchi, and <button type="button" class="more-authors" data-authors="Lorenzo Baraldi, Angelo Sotgiu, Maura Pintor, Marcella Cornia, Lorenzo Baraldi, Asja Fischer, Rita Cucchiara, Battista Biggio">8 more authors</button></div>
+            <div class="venue"><em>Computer Vision and Image Understanding (CVIU)</em>, 2026 (accepted)</div>
+            <div class="pub-links">
+              <button type="button" class="abs-toggle" aria-expanded="false">Abs</button>
+              <a href="https://arxiv.org/abs/2506.03988" target="_blank" rel="noopener">arXiv</a>
+              <a href="https://doi.org/10.48550/arXiv.2506.03988" target="_blank" rel="noopener">DOI</a>
+              <a href="https://github.com/pralab/RAID" target="_blank" rel="noopener">Code</a>
+              <a href="https://huggingface.co/papers/2506.03988" target="_blank" rel="noopener">HF</a>
+            </div>
+            <p class="abstract" hidden>Detectors of AI-generated images report high accuracy, but they are almost always evaluated under idealised conditions. RAID is a dataset of 72k transferable adversarial examples, produced by an ensemble attack across seven detectors and four text-to-image generators, so that robustness can be measured without re-running an attack pipeline from scratch.</p>
+          </div>
+        </li>
 
-    <article class="pub">
-      <h3>Beyond Suffixes: Token Position in GCG Adversarial Attacks on Large Language Models</h3>
-      <p class="authors"><span class="me">Hicham Eddoubi</span>, Umar Faruk Abdullahi, Fadi Hassan</p>
-      <p class="venue">ICLR 2026 Workshop: I Can't Believe It's Not Better (ICBINB), 2026</p>
-      <p class="abstract">GCG-style attacks conventionally append an adversarial suffix. We examine what happens when the optimised tokens are placed elsewhere in the prompt, and what that says about where a model's safety behaviour is actually anchored.</p>
-      <div class="pub-links">
-        <a href="https://openreview.net/forum?id=HcRJvRHkYW" target="_blank" rel="noopener">OpenReview</a>
-        <a href="https://arxiv.org/abs/2602.03265" target="_blank" rel="noopener">arXiv</a>
-        <a href="https://doi.org/10.48550/arXiv.2602.03265" target="_blank" rel="noopener">doi:10.48550/arXiv.2602.03265</a>
-      </div>
-    </article>
+        <li class="pub">
+          <div class="pub-side"><abbr class="pub-badge" title="ICLR 2026 Workshop: I Can't Believe It's Not Better">ICLR W</abbr></div>
+          <div class="pub-body">
+            <div class="pub-title">Beyond Suffixes: Token Position in GCG Adversarial Attacks on Large Language Models</div>
+            <div class="authors"><span class="me">Hicham Eddoubi</span>, Umar Faruk Abdullahi, Fadi Hassan</div>
+            <div class="venue"><em>ICLR Workshop: I Can't Believe It's Not Better (ICBINB)</em>, 2026</div>
+            <div class="pub-links">
+              <button type="button" class="abs-toggle" aria-expanded="false">Abs</button>
+              <a href="https://openreview.net/forum?id=HcRJvRHkYW" target="_blank" rel="noopener">OpenReview</a>
+              <a href="https://arxiv.org/abs/2602.03265" target="_blank" rel="noopener">arXiv</a>
+              <a href="https://doi.org/10.48550/arXiv.2602.03265" target="_blank" rel="noopener">DOI</a>
+            </div>
+            <p class="abstract" hidden>GCG-style attacks conventionally append an adversarial suffix. We examine what happens when the optimised tokens are placed elsewhere in the prompt, and what that says about where a model's safety behaviour is actually anchored.</p>
+          </div>
+        </li>
 
-    <article class="pub">
-      <h3>Data Drift in Android Malware Detection</h3>
-      <p class="authors">Luca Minnei, <span class="me">Hicham Eddoubi</span>, Angelo Sotgiu, Maura Pintor, Ambra Demontis, Battista Biggio</p>
-      <p class="venue">International Conference on Machine Learning and Cybernetics (ICMLC), Miyazaki, Japan, 2024, pp. 157–163</p>
-      <p class="abstract">How Android malware classifiers degrade as the app ecosystem shifts underneath them, and what that means for how these systems should be evaluated and maintained.</p>
-      <div class="pub-links">
-        <a href="https://ieeexplore.ieee.org/document/10935015" target="_blank" rel="noopener">IEEE Xplore</a>
-        <a href="https://doi.org/10.1109/ICMLC63072.2024.10935015" target="_blank" rel="noopener">doi:10.1109/ICMLC63072.2024.10935015</a>
-        <a href="https://github.com/pralab/android-detectors" target="_blank" rel="noopener">related code</a>
-      </div>
-    </article>
+      </ol>
     </section>
 
+    <section class="pub-group">
+      <h2 class="pub-year">2024</h2>
+      <ol class="pub-list">
+
+        <li class="pub">
+          <div class="pub-side"><abbr class="pub-badge" title="International Conference on Machine Learning and Cybernetics">ICMLC</abbr></div>
+          <div class="pub-body">
+            <div class="pub-title">Data Drift in Android Malware Detection</div>
+            <div class="authors">Luca Minnei, <span class="me">Hicham Eddoubi</span>, Angelo Sotgiu, and <button type="button" class="more-authors" data-authors="Maura Pintor, Ambra Demontis, Battista Biggio">3 more authors</button></div>
+            <div class="venue"><em>International Conference on Machine Learning and Cybernetics (ICMLC)</em>, Miyazaki, Japan, 2024</div>
+            <div class="pub-links">
+              <button type="button" class="abs-toggle" aria-expanded="false">Abs</button>
+              <a href="https://ieeexplore.ieee.org/document/10935015" target="_blank" rel="noopener">IEEE</a>
+              <a href="https://doi.org/10.1109/ICMLC63072.2024.10935015" target="_blank" rel="noopener">DOI</a>
+              <a href="https://github.com/pralab/android-detectors" target="_blank" rel="noopener">Code</a>
+            </div>
+            <p class="abstract" hidden>How Android malware classifiers degrade as the app ecosystem shifts underneath them, and what that means for how these systems should be evaluated and maintained.</p>
+          </div>
+        </li>
+
+      </ol>
+    </section>
 
   </div>
 </main>
@@ -89,6 +110,6 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=cce7476"></script>
+<script src="assets/js/main.js?v=pubs1"></script>
 </body>
 </html>
