@@ -96,6 +96,8 @@
     }
     var more = event.target.closest(".more-authors");
     if (more) {
+      var prev = more.previousSibling;
+      if (prev && prev.nodeType === 3) prev.nodeValue = prev.nodeValue.replace(/and\s*$/, "");
       more.replaceWith(document.createTextNode(more.getAttribute("data-authors")));
     }
   });
